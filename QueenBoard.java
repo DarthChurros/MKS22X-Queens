@@ -2,18 +2,17 @@ import java.util.ArrayList;
 
 public class QueenBoard {
   private int[][] board;
-  private boolean empty;
 
   public QueenBoard(int size) {
     board = new int[size][size];
-    empty = true;
   }
 
-  public boolean addQueen(int r, int c) {
+  private boolean addQueen(int r, int c) {
     if (board[r][c] != 0) return false;
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
         if (r - c == i - j
+        || board.length - r - c == board.length - i - j
         || r == i
         || c == j) {
           board[i][j]++;
@@ -24,11 +23,12 @@ public class QueenBoard {
   return true;
   }
 
-  public boolean removeQueen(int r, int c) {
+  private boolean removeQueen(int r, int c) {
     if (board[r][c] >= 0) return false;
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
         if (r - c == i - j
+        || board.length - r - c == board.length - i - j
         || r == i
         || c == j) {
           board[i][j]--;
@@ -37,6 +37,30 @@ public class QueenBoard {
     }
   board[r][c] = 0;
   return true;
+  }
+
+  public boolean solve() {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        if (board[i][j] != 0) {
+          throw new IllegalStateException("Board must be empty to solve!");
+        }
+      }
+    }
+    return solve(0);
+  }
+
+  private boolean solve(int row) {
+    if (row == board.length) {
+      return true;
+    }
+    for (int col = 0; col < board[row].length; col++) {
+      if (addQueen(row, col)) {
+        if(solve(row + 1)) return true;
+        removeQueen(row, col);
+      }
+    }
+    return false;
   }
 
   public String toString() {
@@ -51,17 +75,16 @@ public class QueenBoard {
   }
 
   public static void main(String[] args) {
-    QueenBoard test = new QueenBoard(5);
-    System.out.println(test + "\n\n");
-    System.out.println(test.addQueen(0,0));
-    System.out.println(test + "\n\n");
-    System.out.println(test.addQueen(0,1));
-    System.out.println(test + "\n\n");
-    System.out.println(test.addQueen(3,4));
-    System.out.println(test + "\n\n");
-    System.out.println(test.removeQueen(4,4));
-    System.out.println(test + "\n\n");
-    System.out.println(test.removeQueen(0,0));
-    System.out.println(test + "\n\n");
+    QueenBoard test = new QueenBoard(8);
+    System.out.println(test.addQueen(4,3));
+    System.out.println(test);
+    System.out.println(test.addQueen(6,2));
+    System.out.println(test);
+    System.out.println(test.removeQueen(4,3));
+    System.out.println(test);
+    System.out.println(test.removeQueen(6,2));
+    System.out.println(test);
+    System.out.println(test.solve());
+    System.out.println(test);
   }
 }
