@@ -14,17 +14,14 @@ public class QueenBoard {
     board[r][c]--;
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
-        if (r - c == i - j
-        || (r == i) != (c == j)) {
-          if (board[i][j] < 0) {
-            board[i][j]--;
-          } else {
-            board[i][j]++;
-          }
+        if ((r - c == i - j
+        || (r == i) != (c == j))
+        && board[i][j] >= 0) {
+          board[i][j]++;
         }
       }
     }
-    return true;
+  return true;
   }
 
   public String toString() {
@@ -39,13 +36,13 @@ public class QueenBoard {
   }
 
   public static void main(String[] args) {
-    QueenBoard test = new QueenBoard(8);
+    QueenBoard test = new QueenBoard(5);
     System.out.println(test + "\n\n");
     System.out.println(test.addQueen(0,0));
     System.out.println(test + "\n\n");
     System.out.println(test.addQueen(0,1));
     System.out.println(test + "\n\n");
-    System.out.println(test.addQueen(5,4));
+    System.out.println(test.addQueen(3,4));
     System.out.println(test + "\n\n");
   }
 }
