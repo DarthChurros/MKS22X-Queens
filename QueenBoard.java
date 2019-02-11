@@ -63,11 +63,39 @@ public class QueenBoard {
     return false;
   }
 
+  public int countSolutions() {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        if (board[i][j] != 0) {
+          throw new IllegalStateException("Board must be empty to solve!");
+        }
+      }
+    }
+    return count(0, 0);
+  }
+
+  private int count(int row, int solutions) {
+    if (row == board.length) {
+      return 1;
+    }
+    for (int col = 0; col < board[row].length; col++) {
+      if (addQueen(row, col)) {
+        solutions += count(row + 1, solutions);
+        removeQueen(row, col);
+      }
+    }
+    return solutions;
+  }
+
   public String toString() {
     String ans = "";
     for (int i = 0; i < board.length; i++) {
       for (int j = 0; j < board[i].length; j++) {
-        ans += (board[i][j] + " ");
+        if (board[i][j] == -1) {
+          ans += "Q ";
+        } else {
+          ans += "_ ";
+        }
       }
       ans += '\n';
     }
@@ -75,7 +103,8 @@ public class QueenBoard {
   }
 
   public static void main(String[] args) {
-    QueenBoard test = new QueenBoard(8);
+    QueenBoard test = new QueenBoard(3);
+    /*
     System.out.println(test.addQueen(4,3));
     System.out.println(test);
     System.out.println(test.addQueen(6,2));
@@ -86,5 +115,8 @@ public class QueenBoard {
     System.out.println(test);
     System.out.println(test.solve());
     System.out.println(test);
+    */
+
+    System.out.println(test.countSolutions());
   }
 }
