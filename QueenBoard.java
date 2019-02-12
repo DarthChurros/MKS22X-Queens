@@ -104,7 +104,7 @@ public class QueenBoard {
   }
 
   public static void main(String[] args) {
-    QueenBoard test = new QueenBoard(8);
+    QueenBoard test;
     /*
     System.out.println(test.addQueen(4,3));
     System.out.println(test);
@@ -117,7 +117,9 @@ public class QueenBoard {
     System.out.println(test.solve());
     System.out.println(test);
     */
-
-    System.out.println(test.countSolutions());
+    for (int i = 1; i < 9; i++) {
+      test = new QueenBoard(i);
+      System.out.println("solutions to "+i+": "+test.countSolutions());
+    }
   }
 }
