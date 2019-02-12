@@ -71,16 +71,17 @@ public class QueenBoard {
         }
       }
     }
-    return count(0, 0);
+    return count(0);
   }
 
-  private int count(int row, int solutions) {
+  private int count(int row) {
     if (row == board.length) {
       return 1;
     }
+    int solutions = 0;
     for (int col = 0; col < board[row].length; col++) {
       if (addQueen(row, col)) {
-        solutions += count(row + 1, solutions);
+        solutions += count(row + 1);
         removeQueen(row, col);
       }
     }
@@ -103,7 +104,7 @@ public class QueenBoard {
   }
 
   public static void main(String[] args) {
-    QueenBoard test = new QueenBoard(3);
+    QueenBoard test = new QueenBoard(8);
     /*
     System.out.println(test.addQueen(4,3));
     System.out.println(test);
